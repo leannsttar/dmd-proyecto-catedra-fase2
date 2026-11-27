@@ -28,8 +28,6 @@
 | **Cronograma** | Tu fila: fecha real y quién lo hizo |
 | **Video** | Codo y silueta, el perfil de los grupos y la columna `segmento_cluster` ya en `Dim_Cliente` (ver `docs/entrega.md`) |
 
-Además, **pásale a Leandro la carpeta `mining\output\` y el notebook** cuando termines (por el grupo o Drive), para que quede en el repositorio y la parte 4 tenga tus grupos.
-
 ---
 
 ## Paso 1. Preparar tu computadora
@@ -97,10 +95,6 @@ GROUP BY segmento_cluster ORDER BY segmento_cluster;
 
 Debe dar una fila por grupo y sumar 120 clientes.
 
-## Paso 5. Avisar y compartir
-
-Pásale a Leandro el notebook y la carpeta `mining\output\` (y avisa a la parte 4 que los grupos cambiaron, para que actualice su reporte).
-
 ## Si algo falla
 
 | Problema | Qué hacer |
@@ -129,4 +123,3 @@ La Fase 1 los evaluó y los descartó, y los datos lo confirman: cada orden tien
 - Los grupos tienen nombre y el k está justificado.
 - El ETL dio `OK` y `Dim_Cliente.segmento_cluster` tiene tus grupos.
 - La sección 4.2 del Google Doc tiene las 2 figuras, la tabla de perfil y la interpretación.
-- Leandro y la parte 4 tienen tus archivos.

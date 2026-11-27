@@ -24,8 +24,6 @@
 | **Cronograma** | Tu fila: fecha real y quién lo hizo |
 | **Video** | Un recorrido corto por las 5 páginas usando los filtros (ver `docs/entrega.md`) |
 
-El archivo `.pbix` guárdalo en tu computadora y compártelo con el equipo (Drive o el grupo) para la defensa. **No va al repositorio.**
-
 ---
 
 ## Paso 0. Preparar tu computadora
@@ -133,13 +131,9 @@ Por cada página, 1 o 2 frases que respondan **qué pasó, por qué y qué harí
 
 Las tarjetas deben seguir dando los mismos valores del paso 4.
 
-## Cuando la parte 3 termine los grupos
+## Los grupos de K-means (parte 3)
 
-La parte 3 puede cambiar el número de grupos y les pone nombre. Cuando avise:
-- **Con CSV:** reemplaza tu `data\sample\Dim_Cliente.csv` por el nuevo (descarga el repo otra vez o pídelo en el grupo) y pulsa **Actualizar**.
-- **Con SQL Server:** descarga el repo otra vez, vuelve a correr `.venv\Scripts\python -m etl.run_etl` y pulsa **Actualizar**.
-
-Los nombres de los grupos están en `mining\output\perfil_segmentos.csv`.
+Trabaja con los grupos que ya están en los datos (`Dim_Cliente.segmento_cluster`, una corrida provisional con 3 grupos). La parte 3 se hace después y no cambia nada de tu reporte. En la página Clientes usa la columna tal cual; qué significa cada grupo lo explica la parte 3 en la sección 4.2.
 
 ## Si algo falla
 
@@ -164,4 +158,3 @@ Los nombres de los grupos están en `mining\output\perfil_segmentos.csv`.
 - Las tarjetas sin filtros dan los valores del paso 4.
 - Las 5 páginas responden su pregunta y tienen los filtros comunes.
 - Cada página tiene su captura y su interpretación en el Google Doc (sección 6), y la sección 4.3 tiene la captura del modelo.
-- El `.pbix` está compartido con el equipo para el video y la defensa.

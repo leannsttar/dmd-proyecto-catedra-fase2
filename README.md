@@ -91,7 +91,7 @@ Los 10 KPIs con su fórmula están en [`docs/kpis.md`](docs/kpis.md).
 ## Reglas del equipo
 
 - `main` siempre funciona: el ETL corre y da `OK`.
-- Una rama por tarea y un **PR revisado por otra persona del equipo**. Las partes 3 y 4 no necesitan Git: su trabajo va al Google Doc, y los archivos que cambien (por ejemplo `mining/output/`) se los pasan a Leandro para que los suba.
+- Una rama por tarea y un **PR revisado por otra persona del equipo**. Las partes 3 y 4 no necesitan Git: su trabajo va al Google Doc y al video.
 - No edites a mano lo que se genera solo: `data/sample/`, `sql/ddl/01_tablas.sql`, `docs/diccionario_datos.md` y `powerbi/power_query/`.
 - No subir `.env`, `.pbix` ni respaldos `.bak` (ya están en `.gitignore`).
 
