@@ -20,11 +20,13 @@ Cada carpeta tiene un README con el mismo orden: **qué es, qué ya está hecho,
 |---|---|---|---|
 | **1. ETL y DW** | [`pentaho/README.md`](pentaho/README.md) | ETL en **Pentaho** (job + 8 transformaciones, como propuso la Fase 1), verificado contra el Excel y contra el ETL de Python | Capturas en Spoon y redactar la sección 2 del informe |
 | **2. KPIs y cubo** | [`sql/README.md`](sql/README.md), luego [`olap/README.md`](olap/README.md) | Los 10 KPIs en SQL con valores verificados; cubo SSAS construido y procesado, con los KPIs en MDX iguales a SQL; evidencias en [`evidencias/parte2/`](evidencias/parte2/README.md) | Redactar las secciones 3 y 4.1 del informe |
-| **3. Minería** | [`mining/README.md`](mining/README.md) | Notebook de K-means que corre completo | Elegir el número de grupos, ponerle nombre a cada uno e interpretarlos |
-| **4. Power BI** | [`powerbi/README.md`](powerbi/README.md) | Consultas para pegar, relaciones, medidas de los 10 KPIs y boceto de 5 páginas | Armar el reporte y escribir la interpretación |
+| **3. Minería** | [`mining/README.md`](mining/README.md) | Notebook de K-means que corre completo; una corrida provisional (k = 3) ya está en la base | Decidir variables, k y nombres de los grupos; cargarlos en la base; sección 4.2 del informe |
+| **4. Power BI** | [`powerbi/README.md`](powerbi/README.md) | Datos limpios (CSV y base), consultas para pegar, relaciones, medidas de los 10 KPIs con su valor esperado y propuesta de 5 páginas con datos para interpretarlas | Armar el reporte; secciones 4.3 y 6 del informe |
 | **Informe PDF** | [`docs/README.md`](docs/README.md) | Material por sección del informe, decisiones de diseño y relación con las clases | Redactar, hacer capturas y armar la portada |
 
 ## Primer uso (una vez por computadora)
+
+> **¿Eres de la parte 3 o 4?** Sigue [`docs/preparar_computadora.md`](docs/preparar_computadora.md): es esta misma preparación explicada paso a paso, con los errores típicos y cómo resolverlos. No necesitas Git, Pentaho ni Visual Studio.
 
 Requisitos: Windows, Python 3.12 y Git. Para usar la base: SQL Server con autenticación de Windows y **ODBC Driver 18 for SQL Server**. Las partes 3 y 4 pueden empezar sin SQL Server.
 
@@ -89,7 +91,7 @@ Los 10 KPIs con su fórmula están en [`docs/kpis.md`](docs/kpis.md).
 ## Reglas del equipo
 
 - `main` siempre funciona: el ETL corre y da `OK`.
-- Una rama por tarea (`parte3-kmeans-k`, `parte4-pagina-finanzas`, …) y un **PR revisado por otra persona del equipo**. Con el plazo actual, PRs pequeños y revisados el mismo día.
+- Una rama por tarea y un **PR revisado por otra persona del equipo**. Las partes 3 y 4 no necesitan Git: su trabajo va al Google Doc, y los archivos que cambien (por ejemplo `mining/output/`) se los pasan a Leandro para que los suba.
 - No edites a mano lo que se genera solo: `data/sample/`, `sql/ddl/01_tablas.sql`, `docs/diccionario_datos.md` y `powerbi/power_query/`.
 - No subir `.env`, `.pbix` ni respaldos `.bak` (ya están en `.gitignore`).
 
@@ -104,5 +106,5 @@ sql/           Tablas, vistas de KPIs, cubo en SQL y consultas de evidencia → 
 olap/          Proyecto del cubo SSAS, KPIs en MDX y script de despliegue → parte 2
 mining/        Notebook de K-means y sus resultados                       → parte 3
 powerbi/       Guía, consultas y medidas DAX (aquí se guardará el .pbip)  → parte 4
-docs/          Material para redactar el informe                          → quien redacte
+docs/          Material para el informe y cómo preparar tu computadora    → quien redacte, partes 3 y 4
 ```

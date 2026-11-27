@@ -17,6 +17,7 @@ El PDF de la Fase 2 pide 6 secciones; la rúbrica además evalúa definición de
 | 5. Especificaciones del diseño (final) | Diagrama, diccionario de datos y **cambios respecto a la Fase 1 con su justificación** | [esquema_estrella.md](esquema_estrella.md), [diccionario_datos.md](diccionario_datos.md), [decisiones.md](decisiones.md) |
 | 6. Reportes e interpretación | Páginas del dashboard e interpretación para Andina | `../powerbi/README.md` |
 | Todas | Qué concepto de cada clase (unidades 1 a 5) se aplicó y dónde, para citar el material del curso | [marco_teorico.md](marco_teorico.md) |
+| [preparar_computadora.md](preparar_computadora.md) | Para las partes 3 y 4: descargar el proyecto, instalar Python, conectar con tu SQL Server y cargar la base, con los errores típicos |
 
 ## Archivos
 

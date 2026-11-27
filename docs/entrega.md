@@ -35,8 +35,8 @@ Además de la rúbrica, la Ruta lista como criterios de evaluación de la Fase 2
 | 1 | Documentación y presentación | Portada, Tabla 1, **Figura 1 (arquitectura)**, evidencia gráfica de **cada** etapa | Portada lista. Evidencia del ETL lista (Figuras 2–6). Falta Figura 1 y la evidencia de KPIs, cubo, K-means y Power BI; faltan 4 celdas de la Tabla 1 | Todos |
 | 2 | Definición del problema | Sección inicial | ✅ Escrita | — |
 | 3 | Recolección y preparación de datos | Sección 2 (2.1–2.4) | ✅ Completa con 5 figuras y la Tabla 3 | Parte 1 ✅ |
-| 4 | Definición (cálculo) de KPIs | Sección 3, Tabla 4 | ❌ Faltan los 10 valores, la evidencia de las consultas y los meses bajo el umbral de 40 % | Parte 2 |
-| 5 | Selección (aplicación) de herramientas y técnicas | 4.1 Cubo · 4.2 K-means · 4.3 Power BI | ❌ Las tres subsecciones están pendientes | Partes 2, 3 y 4 |
+| 4 | Definición (cálculo) de KPIs | Sección 3, Tabla 4 | ❌ En el doc faltan los 10 valores, la evidencia de las consultas y los meses bajo el umbral de 40 %. El material ya está: valores, consultas y capturas en `evidencias/parte2/` | Parte 2 |
+| 5 | Selección (aplicación) de herramientas y técnicas | 4.1 Cubo · 4.2 K-means · 4.3 Power BI | ❌ Las tres subsecciones están pendientes en el doc. Cubo terminado (`evidencias/parte2/`); qué entrega cada parte: `mining/README.md` y `powerbi/README.md` | Partes 2, 3 y 4 |
 | 6 | Especificaciones del diseño | 5.1 figura · 5.2 · 5.3 | 5.2 ✅; 5.3 ✅ (5 ajustes, ETL incluido); falta la **figura del esquema estrella final** y la *Conexión de Power BI* | Parte 4 y quien haga la figura |
 | 7 | Cronograma de trabajo | Tabla 6 | Filas 2–5 ✅. Faltan *Fechas reales* y *Quién lo hizo* de las filas 1 y 6–10 (12 celdas) | Cada parte su fila |
 | 8 | Ortografía y gramática | Todo el doc | Revisar al final (acentos, mayúsculas, números con su unidad) | Quien exporte el PDF |
