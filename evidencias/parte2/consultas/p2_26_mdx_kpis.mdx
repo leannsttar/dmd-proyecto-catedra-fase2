@@ -1,0 +1,7 @@
+-- KPIs del cubo, año 2024 (comparar con vw_KPI_Anual)
+SELECT {[Measures].[Margen Bruto], [Measures].[Margen Neto], [Measures].[Indice Gastos Operativos],
+        [Measures].[ROI], [Measures].[Flujo Caja Acumulado], [Measures].[Ventas por Cliente],
+        [Measures].[Tasa Conversion Web], [Measures].[Ticket Promedio], [Measures].[Participacion Ecommerce],
+        [Measures].[Total], [Measures].[Hecho Ventas Count], [Measures].[Clientes Distintos]} ON COLUMNS
+FROM [Cubo Ventas]
+WHERE [Mes].[Calendario].[Anio].&[2024]

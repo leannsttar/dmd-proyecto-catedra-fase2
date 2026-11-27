@@ -1,6 +1,4 @@
-/* Miembros calculados de los KPIs (Fase 1, sección 3) para el script de cálculos del cubo SSAS.
-   ESQUELETO: los nombres de medidas y jerarquías suponen la estructura de olap/README.md.
-   Ajustarlos a como queden en el proyecto. Valores esperados 2024 en docs/kpis.md. */
+/* KPIs de la Fase 1 (sección 3) como miembros calculados del cubo */
 
 CALCULATE;
 
@@ -49,4 +47,4 @@ CREATE MEMBER CURRENTCUBE.[Measures].[Flujo Caja Acumulado] AS
 -- Tráfico web -------------------------------------------------------------------
 CREATE MEMBER CURRENTCUBE.[Measures].[Tasa Conversion Web] AS
     IIF([Measures].[Visitas Web] = 0, NULL, [Measures].[Conversiones Web] / [Measures].[Visitas Web]),
-    FORMAT_STRING = "Percent", VISIBLE = 1;
+    FORMAT_STRING = "Percent", VISIBLE = 1
