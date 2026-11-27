@@ -1,6 +1,6 @@
 # Entrega de la Fase 2: qué se entrega y cómo se evalúa
 
-Fuente: enunciado `Proyecto_Catedra_Fase2_Estudiante.pdf` y actividad del Aula Digital (revisados el 26 nov 2026).
+Fuentes: enunciado `Proyecto_Catedra_Fase2_Estudiante.pdf`, actividad del Aula Digital, *Ruta de Aprendizaje - DMD941.pdf* y retroalimentación de la Fase 1 (revisados el 26 nov 2026).
 
 ## Qué se entrega
 
@@ -16,7 +16,19 @@ No hay checkpoints pendientes: los de la Fase 2 (C1 y C2) nunca se abrieron en e
 
 ## Rúbrica: 9 criterios, cada uno de 0 a 10
 
-Niveles: Inicial (0–3.99) no completado · Básico (4–5.99) incompleto · Competente (8–8.99) completo con errores · **Estratégico (9–10) completo sin errores**.
+Escala de la **Ruta de Aprendizaje** (más detallada que la del enunciado, que omite un nivel):
+
+| Nivel | Nota | Qué significa |
+|---|---|---|
+| Inicial | 0.00–3.99 | Criterio no completado |
+| Básico | 4.00–5.99 | Criterio incompleto |
+| Competente | 6.00–7.99 | Parcialmente completo, con errores visibles |
+| Destacado | 8.00–8.99 | Completo, pero se detectan errores |
+| **Estratégico** | **9.00–10.00** | **Completo y sin errores** |
+
+Es decir: **completo no basta para 9–10, tiene que estar sin errores.** Un `[Completar]` olvidado, una figura sin citar o una falta de ortografía bajan el criterio a Destacado (8–8.99).
+
+Además de la rúbrica, la Ruta lista como criterios de evaluación de la Fase 2: **«Solución y configuración adecuada de todos los ejercicios establecidos»** y **«Defensa de las fases del proyecto»**, y dice que «la defensa se realizará mediante la elaboración de un video que demuestre y garantice el correcto funcionamiento de la solución». O sea, el video **es** la defensa (más la defensa oral virtual que anuncia el enunciado). Grupos de 4 estudiantes.
 
 | # | Criterio | Dónde está en el doc | Estado (26 nov, 19:10) | Responsable |
 |---|---|---|---|---|
