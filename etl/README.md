@@ -1,4 +1,6 @@
-# Parte 1: ETL y Datawarehouse
+# Parte 1: ETL y Datawarehouse (versión en Python)
+
+> **El ETL de la entrega está en Pentaho:** ver [`pentaho/README.md`](../pentaho/README.md). Este programa de Python produce exactamente las mismas tablas; se usa para validar la carga de Pentaho (`--validar-bd`) y para regenerar los CSV de `data/sample/`.
 
 **Qué es esta carpeta:** el programa que toma el Excel del caso, lo limpia y lo carga en la base de datos `AndinaRetailDW` de SQL Server. También genera la copia en CSV (`data/sample/`) que usan las partes 3 y 4.
 
@@ -17,7 +19,7 @@
    .venv\Scripts\python -m etl.run_etl
    ```
    Debe terminar con `OK`. Si no tienes SQL Server, usa `--sin-bd` (solo regenera los CSV).
-2. **Decidir con el equipo: ¿Python o Pentaho?** La Fase 1 prometió **Pentaho** para el ETL (y Python solo para K-means). Ver [`docs/decisiones.md`](../docs/decisiones.md), D4.
+2. **Decidido: Pentaho** (decisión D4, ya aplicada en [`pentaho/`](../pentaho/README.md)). Lo que sigue queda como referencia de cómo se construyó.
    - **Si se queda Python:** listo. Para el informe, justifica el cambio con el texto de D4.
    - **Si se hace en Pentaho:**
      1. Crea las tablas con [`sql/ddl/01_tablas.sql`](../sql/ddl/01_tablas.sql) (en SSMS).

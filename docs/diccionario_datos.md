@@ -88,14 +88,14 @@ Convenciones: **PK** llave primaria, **FK** llave foránea, montos en USD. La co
 
 | Columna | Tipo | Nulo | Llave | Origen (Excel → destino) | Descripción |
 |---|---|---|---|---|---|
-| `tiempo_key` | INT | no | PK FK → Dim_Tiempo.tiempo_key | Ventas.Fecha → AAAAMMDD | Fecha de la orden |
+| `tiempo_key` | INT | no | FK → Dim_Tiempo.tiempo_key | Ventas.Fecha → AAAAMMDD | Fecha de la orden |
 | `mes_key` | INT | no | FK → Dim_Mes.mes_key | Ventas.Fecha → AAAAMM | Mes de la orden: Dim_Mes es la dimensión conformada que comparte con Hecho_Finanzas_Mensual |
-| `cliente_key` | INT | no | PK FK → Dim_Cliente.cliente_key | Ventas.ClienteID → Dim_Cliente | Cliente que compra |
-| `producto_key` | INT | no | PK FK → Dim_Producto.producto_key | Ventas.Producto → Dim_Producto | Producto vendido |
-| `canal_key` | INT | no | PK FK → Dim_Canal.canal_key | Ventas.Canal → Dim_Canal | Canal de la venta |
-| `vendedor_key` | INT | no | PK FK → Dim_Vendedor.vendedor_key | Ventas.Vendedor → Dim_Vendedor | Equipo que vende |
-| `region_cliente_key` | INT | no | PK FK → Dim_Region.region_key | Clientes.Region (vía Ventas.ClienteID) → Dim_Region | Región asignada al cliente (hoja Clientes) |
-| `region_venta_key` | INT | no | PK FK → Dim_Region.region_key | Ventas.Region → Dim_Region | Región donde se realizó la venta (hoja Ventas) |
+| `cliente_key` | INT | no | FK → Dim_Cliente.cliente_key | Ventas.ClienteID → Dim_Cliente | Cliente que compra |
+| `producto_key` | INT | no | FK → Dim_Producto.producto_key | Ventas.Producto → Dim_Producto | Producto vendido |
+| `canal_key` | INT | no | FK → Dim_Canal.canal_key | Ventas.Canal → Dim_Canal | Canal de la venta |
+| `vendedor_key` | INT | no | FK → Dim_Vendedor.vendedor_key | Ventas.Vendedor → Dim_Vendedor | Equipo que vende |
+| `region_cliente_key` | INT | no | FK → Dim_Region.region_key | Clientes.Region (vía Ventas.ClienteID) → Dim_Region | Región asignada al cliente (hoja Clientes) |
+| `region_venta_key` | INT | no | FK → Dim_Region.region_key | Ventas.Region → Dim_Region | Región donde se realizó la venta (hoja Ventas) |
 | `orden_id` | NVARCHAR(20) | no | PK | Ventas.OrdenID | Dimensión degenerada: código de la orden (AR-20001) |
 | `cantidad` | INT | no |  | Ventas.Cantidad | Unidades vendidas (aditiva) |
 | `precio_unitario` | DECIMAL(12,2) | no |  | Ventas.PrecioUnitario | Precio unitario en USD (no aditiva: usar total/cantidad) |
