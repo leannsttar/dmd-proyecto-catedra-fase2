@@ -1,45 +1,70 @@
 # Parte 2 (cubo): cubo OLAP en SSAS
 
-**Qué es esta carpeta:** la guía y los cálculos para construir el **cubo SSAS multidimensional** que prometió la Fase 1.
+**Qué es esta carpeta:** el **cubo SSAS multidimensional** que prometió la Fase 1, ya construido, y cómo montarlo en otra computadora.
 
-**Para quién:** la persona de la parte 2.
+**Para quién:** cualquiera del equipo que necesite desplegar el cubo, por ejemplo para navegarlo en la defensa o conectarlo desde Power BI.
 
-## Qué ya está hecho y qué falta
+## Qué hay
 
-| Pieza | Estado |
+| Pieza | Archivo |
 |---|---|
-| Cubo hecho en SQL (`dbo.vw_Cubo_Ventas`, con `ROLLUP` y `CUBE`) | ✅ Funciona; sirve de respaldo y de evidencia |
-| Fórmulas de los KPIs para el cubo (`ssas/kpis_calculados.mdx`) | Esqueleto listo para pegar |
-| **Proyecto SSAS** (Visual Studio) | ⬜ **Por construir**: es tu tarea principal |
+| Proyecto SSAS (Visual Studio) | `ssas/AndinaRetail_Cubo/` (abrir `AndinaRetail_Cubo.slnx`) |
+| KPIs como miembros calculados (MDX) | `ssas/kpis_calculados.mdx`, ya incluido en el cubo |
+| Despliegue y procesamiento | `ssas/desplegar_cubo.ps1` |
+| Permiso de lectura del servicio SSAS | `ssas/permiso_servicio_ssas.sql` |
+| Cubo ROLAP en SQL (respaldo) | `dbo.vw_Cubo_Ventas` y `sql/olap/02_operadores_olap.sql` |
 
-## Tus pasos
+Evidencias, resultados y problemas resueltos: [`evidencias/parte2/README.md`](../evidencias/parte2/README.md).
 
-Requisitos: el servicio *SQL Server Analysis Services* en modo **Multidimensional** y Visual Studio con la extensión *Analysis Services Projects*.
+## Diseño del cubo
 
-1. Asegúrate de que la base esté cargada (`.venv\Scripts\python -m etl.run_etl` da `OK`).
-2. En Visual Studio: nuevo proyecto **Analysis Services Multidimensional** guardado en `olap/ssas/AndinaRetail_Cubo/`.
-3. **Data Source:** SQL Server `localhost`, base `AndinaRetailDW`, cuenta de servicio.
-4. **Data Source View:** agrega las 10 tablas (no las `Etl_*`). Las relaciones salen solas de las llaves de la base. Verifica que `Dim_Region` esté unida **dos veces** a `Hecho_Ventas` y que `Dim_Mes` esté unida a **los dos hechos** (`mes_key`).
-5. **Dimensiones** (con sus jerarquías):
-   - *Tiempo* (Dim_Tiempo): `anio → semestre → trimestre → nombre_mes → fecha`. Ordena `nombre_mes` por `mes_numero`.
-   - *Mes* (Dim_Mes): `anio → trimestre → nombre_mes`.
-   - *Cliente*: atributos `segmento`, `segmento_cluster` (grupo de K-means) y `cliente_id`.
-   - *Producto*: `categoria → producto`.
-   - *Canal*, *Vendedor* y *Region*: simples.
-6. **Cubo** con tres grupos de medidas:
-   - Hecho_Ventas: `total`, `cantidad` y el conteo de filas (= órdenes). En un grupo aparte, *Distinct Count* de `cliente_key`.
-   - Hecho_Finanzas_Mensual: sumas.
-   - Hecho_Trafico_Web: sumas.
-7. **Uso de dimensiones:** agrega *Region* dos veces, como "Región Venta" (`region_venta_key`) y "Región Cliente" (`region_cliente_key`). *Mes* se relaciona con Ventas y con Finanzas por `mes_key`. Eso permite comparar ambos hechos (el «cubo virtual» de la Clase 10).
-8. **Cálculos:** pega `ssas/kpis_calculados.mdx` en la pestaña *Calculations* (vista de script). Ajusta los nombres de las medidas si en tu proyecto quedaron distintos.
-9. **Desplegar y procesar.** Con SQL Server 2025 *Standard Developer*, el botón Deploy de Visual Studio puede fallar con *"The current edition 'StandardDeveloper64' … is not supported by the client"*. Si pasa, despliega el `.asdatabase` compilado con el proveedor MSOLAP desde PowerShell. Leandro tiene un script que ya resolvió esto en un proyecto anterior.
-10. **Verificar:** en SSMS (conexión a Analysis Services), los KPIs anuales del cubo deben dar lo mismo que `SELECT * FROM dbo.vw_KPI_Anual`.
+- **Data source:** SQL Server `localhost`, base `AndinaRetailDW`, con la cuenta del servicio.
+- **Vista de datos (DSV):** las 10 tablas del DW. Las 11 relaciones salen de las llaves foráneas.
+- **Dimensiones y jerarquías:**
+  - *Tiempo* (Dim_Tiempo), jerarquía `Calendario`: Anio → Semestre → Trimestre → Nombre Mes → Fecha. Las claves de nivel llevan el año (`2024-T4`, `2024-11`) para que no se mezclen periodos de años distintos.
+  - *Mes* (Dim_Mes), jerarquía `Calendario`: Anio → Trimestre → Mes.
+  - *Producto*, jerarquía `Categorias`: Categoria → Producto.
+  - *Cliente*: Segmento y Segmento Cluster (grupo de K-means).
+  - *Canal* y *Region*.
+  - *Vendedor* no se incluyó porque ningún KPI la usa.
+- **Grupos de medidas:**
+  - *Hecho Ventas*: Total, Cantidad y Hecho Ventas Count (= órdenes).
+  - *Ventas Clientes Distintos*: Clientes Distintos, el conteo distinto de `cliente_key`. Va en un grupo aparte porque un conteo distinto no se puede sumar entre celdas.
+  - *Hecho Finanzas Mensual*: Ingresos, Costo Ventas, Gastos Operativos, Utilidad Neta, Flujo Caja e Inversiones Realizadas. No incluye `retorno_inversion`, porque un porcentaje no se suma: el ROI se recalcula en MDX.
+  - *Hecho Trafico Web*: Visitas Web y Conversiones Web.
+- **Uso de dimensiones:**
+  - *Region* aparece dos veces en Ventas: *Region Venta* por `region_venta_key` y *Region Cliente* por `region_cliente_key`.
+  - *Mes* es la dimensión conformada entre Ventas y Finanzas (`mes_key`).
+  - *Tiempo* solo se relaciona con Ventas.
+- **Miembros calculados** (`kpis_calculados.mdx`): Ticket Promedio, Ventas por Cliente, Participacion Ecommerce, Crecimiento Ventas, Margen Bruto, Margen Neto, Indice Gastos Operativos, ROI, Flujo Caja Acumulado y Tasa Conversion Web. Cada razón se calcula desde sumas.
 
-## Si el cubo SSAS no sale a tiempo
+## Cómo montarlo en otra computadora
 
-Usa `dbo.vw_Cubo_Ventas` y `sql/olap/02_operadores_olap.sql` como evidencia de análisis multidimensional (es un cubo ROLAP en vez de MOLAP; Clase 10) y anótalo en `docs/decisiones.md`, D6.
+Requisitos:
+- SQL Server con el servicio *SQL Server Analysis Services* en modo **Multidimensional**.
+- Visual Studio con la extensión *Analysis Services Projects*.
 
-Ejemplo sobre la vista:
+1. **Carga la base.** `.venv\Scripts\python -m etl.run_etl` debe dar `OK`.
+2. **Da permiso al servicio SSAS.** Ejecuta `olap/ssas/permiso_servicio_ssas.sql` en SSMS (una vez por computadora).
+3. **Compila.** En Visual Studio, abre `olap/ssas/AndinaRetail_Cubo/AndinaRetail_Cubo.slnx` y elige **Build**. Se genera `bin/AndinaRetail_Cubo.asdatabase`.
+4. **Despliega y procesa** desde la raíz del repo:
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File olap\ssas\desplegar_cubo.ps1
+   ```
+   El script envía el cubo a `localhost`, ejecuta ProcessFull e imprime Total, órdenes y clientes. Deben dar `705113.8 · 850 · 120`.
+
+   No uses el botón Deploy de Visual Studio: con SQL Server 2025 *Standard Developer* falla con *"The current edition 'StandardDeveloper64' … is not supported by the client"*. El script hace lo mismo con el proveedor MSOLAP, que sí reconoce esa edición.
+5. **Verifica los KPIs.** En SSMS, conéctate a Analysis Services (`localhost`) y elige la base `AndinaRetail_Cubo` en el combo de bases. Ejecuta `evidencias/parte2/consultas/p2_26_mdx_kpis.mdx` y compara con `SELECT * FROM dbo.vw_KPI_Anual`. Los 12 valores deben coincidir.
+
+## Detalles que conviene saber al consultar el cubo
+
+- **Ventas y finanzas por periodo:** usa la jerarquía `[Mes].[Calendario]`. Las medidas de Finanzas no se relacionan con *Tiempo* (su grano es mensual), así que cortadas por *Tiempo* muestran el total del año en cada fila.
+- **Flujo Caja Acumulado:** es un acumulado desde el inicio del año (`PERIODSTODATE`). Necesita un año o un mes en contexto, por ejemplo `WHERE [Mes].[Calendario].[Anio].&[2024]`. En el total general sale vacío.
+- **Crecimiento Ventas:** solo tiene valor en el nivel *Nombre Mes* de *Tiempo*, porque compara cada mes con el anterior.
+
+## Respaldo ROLAP
+
+`dbo.vw_Cubo_Ventas` precalcula en SQL todas las combinaciones con `ROLLUP` y `CUBE`, es decir, un cubo ROLAP (Clase 10). Sirve como evidencia de análisis multidimensional si no hay SSAS disponible, por ejemplo en otra computadora:
 
 ```sql
 -- Ventas por categoría y canal (el resto de dimensiones en "Todos")
@@ -50,7 +75,3 @@ WHERE anio IS NULL   -- total general del ROLLUP (con un solo año, es igual al 
   AND nivel_todas_regiones = 1 AND nivel_todos_segmentos = 1 AND nivel_todos_clusters = 1
 ORDER BY categoria, canal;
 ```
-
-## Cómo sabes que terminaste
-
-El cubo está procesado, se puede navegar por año → trimestre → mes y por categoría → producto, y sus KPIs coinciden con `vw_KPI_Anual`.
