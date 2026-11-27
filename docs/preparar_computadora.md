@@ -2,7 +2,7 @@
 
 Esta guía es para lo que se hace **una sola vez** en tu computadora: descargar el proyecto, instalar Python y cargar la base en tu SQL Server. Después de esto, cada parte sigue su propia guía.
 
-**No necesitas Git, Pentaho ni Visual Studio.** El ETL y el cubo ya están hechos (partes 1 y 2).
+**No necesitas Pentaho ni Visual Studio.** El ETL y el cubo ya están hechos (partes 1 y 2).
 
 | Si te toca… | Qué necesitas de esta guía |
 |---|---|
@@ -13,7 +13,7 @@ Esta guía es para lo que se hace **una sola vez** en tu computadora: descargar 
 
 ## 1. Descargar el proyecto
 
-Opción simple, sin Git: en https://github.com/leannsttar/dmd-proyecto-catedra-fase2 → botón verde **Code → Download ZIP**, y descomprímelo en una carpeta **sin espacios ni tildes en la ruta**, por ejemplo `C:\dmd\dmd-proyecto-catedra-fase2`.
+Opción simple: en https://github.com/leannsttar/dmd-proyecto-catedra-fase2 → botón verde **Code → Download ZIP**, y descomprímelo en una carpeta **sin espacios ni tildes en la ruta**, por ejemplo `C:\dmd\dmd-proyecto-catedra-fase2`.
 
 Si ya usas Git: `git clone https://github.com/leannsttar/dmd-proyecto-catedra-fase2.git`.
 

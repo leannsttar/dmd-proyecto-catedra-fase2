@@ -26,7 +26,7 @@ Cada carpeta tiene un README con el mismo orden: **qué es, qué ya está hecho,
 
 ## Primer uso (una vez por computadora)
 
-> **¿Eres de la parte 3 o 4?** Sigue [`docs/preparar_computadora.md`](docs/preparar_computadora.md): es esta misma preparación explicada paso a paso, con los errores típicos y cómo resolverlos. No necesitas Git, Pentaho ni Visual Studio.
+> **¿Eres de la parte 3 o 4?** Sigue [`docs/preparar_computadora.md`](docs/preparar_computadora.md): es esta misma preparación explicada paso a paso, con los errores típicos y cómo resolverlos. No necesitas Pentaho ni Visual Studio.
 
 Requisitos: Windows, Python 3.12 y Git. Para usar la base: SQL Server con autenticación de Windows y **ODBC Driver 18 for SQL Server**. Las partes 3 y 4 pueden empezar sin SQL Server.
 
@@ -91,7 +91,7 @@ Los 10 KPIs con su fórmula están en [`docs/kpis.md`](docs/kpis.md).
 ## Reglas del equipo
 
 - `main` siempre funciona: el ETL corre y da `OK`.
-- Una rama por tarea y un **PR revisado por otra persona del equipo**. Las partes 3 y 4 no necesitan Git: su trabajo va al Google Doc y al video.
+- Una rama por tarea y un **PR revisado por otra persona del equipo**.
 - No edites a mano lo que se genera solo: `data/sample/`, `sql/ddl/01_tablas.sql`, `docs/diccionario_datos.md` y `powerbi/power_query/`.
 - No subir `.env`, `.pbix` ni respaldos `.bak` (ya están en `.gitignore`).
 

@@ -12,7 +12,7 @@
 | Los 10 KPIs calculados y verificados en SQL y en el cubo (parte 2) | `docs\kpis.md` | Son los valores "correctos" con los que comparas |
 | Los grupos de clientes de K-means (parte 3) | Columna `segmento_cluster` de `Dim_Cliente` | Filtro "grupo K-means" en la página de Clientes |
 
-> **No necesitas** Git, Pentaho, Visual Studio ni el cubo SSAS. El reporte se arma en modo **Importación** (decisión D5 en `docs/decisiones.md`).
+> **No necesitas** Pentaho, Visual Studio ni el cubo SSAS. El reporte se arma en modo **Importación** (decisión D5 en `docs/decisiones.md`).
 
 ## Qué entregas al informe (Google Doc)
 
@@ -133,7 +133,7 @@ Las tarjetas deben seguir dando los mismos valores del paso 4.
 
 ## Los grupos de K-means (parte 3)
 
-Trabaja con los grupos que ya están en los datos (`Dim_Cliente.segmento_cluster`, una corrida provisional con 3 grupos). La parte 3 se hace después y no cambia nada de tu reporte. En la página Clientes usa la columna tal cual; qué significa cada grupo lo explica la parte 3 en la sección 4.2.
+Trabaja con los grupos que ya están en los datos (`Dim_Cliente.segmento_cluster`, una corrida provisional con 3 grupos). Puedes armar todo ya: si la parte 3 cambia los grupos, no tienes que rehacer nada, porque los gráficos usan la columna `segmento_cluster` y se ajustan solos al actualizar los datos. En la página Clientes usa la columna tal cual; qué significa cada grupo lo explica la parte 3 en la sección 4.2.
 
 ## Si algo falla
 

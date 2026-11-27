@@ -18,7 +18,7 @@
 4. Forma los grupos y describe el perfil promedio de cada uno.
 5. Guarda el resultado en `mining\output\`.
 
-> **No necesitas** Git, Pentaho, Visual Studio ni el cubo.
+> **No necesitas** Pentaho, Visual Studio ni el cubo.
 
 ## Qué entregas al informe (Google Doc)
 
