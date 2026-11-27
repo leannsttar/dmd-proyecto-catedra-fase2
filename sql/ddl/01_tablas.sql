@@ -92,7 +92,7 @@ CREATE TABLE dbo.Hecho_Ventas (
     cantidad INT NOT NULL,
     precio_unitario DECIMAL(12,2) NOT NULL,
     total DECIMAL(14,2) NOT NULL,
-    CONSTRAINT PK_Hecho_Ventas PRIMARY KEY (tiempo_key, cliente_key, producto_key, canal_key, vendedor_key, region_cliente_key, region_venta_key, orden_id),
+    CONSTRAINT PK_Hecho_Ventas PRIMARY KEY (orden_id),
     CONSTRAINT FK_Hecho_Ventas_tiempo_key FOREIGN KEY (tiempo_key) REFERENCES dbo.Dim_Tiempo (tiempo_key),
     CONSTRAINT FK_Hecho_Ventas_mes_key FOREIGN KEY (mes_key) REFERENCES dbo.Dim_Mes (mes_key),
     CONSTRAINT FK_Hecho_Ventas_cliente_key FOREIGN KEY (cliente_key) REFERENCES dbo.Dim_Cliente (cliente_key),

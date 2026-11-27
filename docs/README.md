@@ -11,7 +11,7 @@ El PDF de la Fase 2 pide 6 secciones; la rúbrica además evalúa definición de
 | Sección del informe | Qué usar | Dónde |
 |---|---|---|
 | 1. Documentación y presentación | Portada formal y capturas de cada etapa (cada README dice qué capturar) | Los README de cada carpeta |
-| 2. Recolección y preparación (ETL) | Reglas de limpieza con su justificación, perfilado del Excel y reporte de carga | [reglas_limpieza.md](reglas_limpieza.md), `../data/sample/perfil_atributos.md`, `../data/sample/reporte_carga.md` |
+| 2. Recolección y preparación (ETL) | ETL en Pentaho con su verificación, capturas listas, reglas de limpieza, perfilado del Excel y reporte de carga | [`../pentaho/README.md`](../pentaho/README.md), [`img/etl/`](img/etl/), [reglas_limpieza.md](reglas_limpieza.md), `../data/sample/perfil_atributos.md`, `../data/sample/reporte_carga.md` |
 | 3. Cálculo de KPIs | Fórmula, grano, valor 2024 y comprobación manual de cada KPI | [kpis.md](kpis.md), `../sql/kpis/02_consultas_kpi.sql` |
 | 4. Herramientas y técnicas | Cubo, operadores OLAP, K-means | `../olap/README.md`, `../sql/olap/02_operadores_olap.sql`, `../mining/README.md` |
 | 5. Especificaciones del diseño (final) | Diagrama, diccionario de datos y **cambios respecto a la Fase 1 con su justificación** | [esquema_estrella.md](esquema_estrella.md), [diccionario_datos.md](diccionario_datos.md), [decisiones.md](decisiones.md) |
