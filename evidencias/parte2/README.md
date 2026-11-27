@@ -36,7 +36,7 @@ Qué se hizo en la Parte 2, qué resultado dio y qué captura lo respalda. Las c
 
 **P4 · El data source no tenía base de datos.** La cadena de conexión no incluía `Initial Catalog`, así que la vista de datos habría mostrado las tablas de `master`. Solución: en el diseñador del data source, *Initial catalog* = `AndinaRetailDW`.
 
-**P5 · Deploy de Visual Studio rechaza la edición del servidor.** El error es "The current edition 'StandardDeveloper64' … is not supported by the client". La extensión de Analysis Services de Visual Studio no reconoce la edición Standard Developer de SQL Server 2025. Solución: `olap/ssas/desplegar_cubo.ps1` envía al servidor la definición que compila Visual Studio (`bin/AndinaRetail_Cubo.asdatabase`) mediante el proveedor MSOLAP, ejecuta ProcessFull y comprueba los totales.
+**P5 · Deploy de Visual Studio rechazó la edición del servidor.** En la máquina donde se construyó el cubo, Deploy falló con "The current edition 'StandardDeveloper64' … is not supported by the client": la extensión de Analysis Services de Visual Studio no reconoció la edición Standard Developer de SQL Server 2025. Solución: `olap/ssas/desplegar_cubo.ps1` envía al servidor la definición que compila Visual Studio (`bin/AndinaRetail_Cubo.asdatabase`) mediante el proveedor MSOLAP, ejecuta ProcessFull y comprueba los totales.
 
 **P6 · El script MDX fallaba por un `;` de más.** Visual Studio agrega `;` al final del script, y como el script ya terminaba en `;` quedaba una sentencia vacía. Solución: `olap/ssas/kpis_calculados.mdx` no termina en `;`.
 

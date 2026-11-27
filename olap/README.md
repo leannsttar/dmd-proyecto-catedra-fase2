@@ -10,7 +10,7 @@
 |---|---|
 | Proyecto SSAS (Visual Studio) | `ssas/AndinaRetail_Cubo/` (abrir `AndinaRetail_Cubo.slnx`) |
 | KPIs como miembros calculados (MDX) | `ssas/kpis_calculados.mdx`, ya incluido en el cubo |
-| Despliegue y procesamiento | `ssas/desplegar_cubo.ps1` |
+| Despliegue y procesamiento, si el Deploy de Visual Studio falla | `ssas/desplegar_cubo.ps1` |
 | Permiso de lectura del servicio SSAS | `ssas/permiso_servicio_ssas.sql` |
 | Cubo ROLAP en SQL (respaldo) | `dbo.vw_Cubo_Ventas` y `sql/olap/02_operadores_olap.sql` |
 
@@ -47,13 +47,13 @@ Requisitos:
 1. **Carga la base.** `.venv\Scripts\python -m etl.run_etl` debe dar `OK`.
 2. **Da permiso al servicio SSAS.** Ejecuta `olap/ssas/permiso_servicio_ssas.sql` en SSMS (una vez por computadora).
 3. **Compila.** En Visual Studio, abre `olap/ssas/AndinaRetail_Cubo/AndinaRetail_Cubo.slnx` y elige **Build**. Se genera `bin/AndinaRetail_Cubo.asdatabase`.
-4. **Despliega y procesa** desde la raíz del repo:
+4. **Despliega y procesa.** Lo normal es usar **Deploy** en Visual Studio (servidor `localhost`), que despliega y procesa el cubo.
+
+   Si Deploy falla con *"The current edition 'StandardDeveloper64' … is not supported by the client"*, usa el script. A nosotros nos pasó con SQL Server 2025 *Standard Developer*. Desde la raíz del repo, después del Build:
    ```powershell
    powershell -ExecutionPolicy Bypass -File olap\ssas\desplegar_cubo.ps1
    ```
-   El script envía el cubo a `localhost`, ejecuta ProcessFull e imprime Total, órdenes y clientes. Deben dar `705113.8 · 850 · 120`.
-
-   No uses el botón Deploy de Visual Studio: con SQL Server 2025 *Standard Developer* falla con *"The current edition 'StandardDeveloper64' … is not supported by the client"*. El script hace lo mismo con el proveedor MSOLAP, que sí reconoce esa edición.
+   El script envía el cubo a `localhost` con el proveedor MSOLAP, ejecuta ProcessFull e imprime Total, órdenes y clientes, que deben dar `705113.8 · 850 · 120`.
 5. **Verifica los KPIs.** En SSMS, conéctate a Analysis Services (`localhost`) y elige la base `AndinaRetail_Cubo` en el combo de bases. Ejecuta `evidencias/parte2/consultas/p2_26_mdx_kpis.mdx` y compara con `SELECT * FROM dbo.vw_KPI_Anual`. Los 12 valores deben coincidir.
 
 ## Detalles que conviene saber al consultar el cubo

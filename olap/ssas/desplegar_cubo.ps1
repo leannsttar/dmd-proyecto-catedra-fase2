@@ -1,8 +1,8 @@
-# Despliega y procesa el cubo AndinaRetail_Cubo; reemplaza la opción Deploy de Visual Studio.
-# Motivo: Deploy falla en SQL Server 2025 Standard Developer ("The current edition
-# 'StandardDeveloper64' ... is not supported by the client") porque la extensión de
-# Visual Studio no reconoce esa edición. El proveedor MSOLAP sí la reconoce, así que este
-# script envía al servidor la misma definición que compila Visual Studio y la procesa.
+# Despliega y procesa el cubo AndinaRetail_Cubo. Es una alternativa al Deploy de Visual Studio.
+# Úsalo si Deploy falla con "The current edition 'StandardDeveloper64' ... is not supported
+# by the client" (nos pasó con SQL Server 2025 Standard Developer: la extensión de Visual Studio
+# no reconoció esa edición). El proveedor MSOLAP sí la reconoce, así que este script envía al
+# servidor la misma definición que compila Visual Studio y la procesa.
 # Uso: en Visual Studio, Build (genera bin\AndinaRetail_Cubo.asdatabase); luego:
 #   powershell -ExecutionPolicy Bypass -File olap\ssas\desplegar_cubo.ps1
 param(
