@@ -18,13 +18,13 @@ JOIN dbo.Dim_Producto p ON p.producto_key = v.producto_key
 GROUP BY p.categoria, t.trimestre, t.mes_numero, t.nombre_mes
 ORDER BY p.categoria, t.mes_numero;
 
--- 2. ROLL (up): menos detalle, de trimestre al año; ROLLUP agrega los subtotales de cada nivel
-SELECT p.categoria, t.anio, t.trimestre, SUM(v.total) AS ventas,
-       GROUPING(t.trimestre) AS es_total_anio, GROUPING(p.categoria) AS es_total_general
+-- 2. ROLL (up): menos detalle, de trimestre al año; ROLLUP agrega además el total general
+SELECT COALESCE(p.categoria, N'Total') AS categoria, t.anio, SUM(v.total) AS ventas
 FROM dbo.Hecho_Ventas v
 JOIN dbo.Dim_Tiempo t ON t.tiempo_key = v.tiempo_key
 JOIN dbo.Dim_Producto p ON p.producto_key = v.producto_key
-GROUP BY ROLLUP (p.categoria, t.anio, t.trimestre);
+GROUP BY t.anio, ROLLUP (p.categoria)
+ORDER BY GROUPING(p.categoria), p.categoria;
 
 -- 3. SLICE: se fija UNA dimensión en un valor (canal = E-commerce) y se mira el resto
 SELECT p.categoria, t.trimestre, SUM(v.total) AS ventas_ecommerce

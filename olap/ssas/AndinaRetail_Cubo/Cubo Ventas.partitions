@@ -1,0 +1,85 @@
+﻿<Cube xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="d5c0d695-03fa-40ba-a81d-87dedb0bff23" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>Cubo Ventas</ID>
+  <MeasureGroups>
+    <MeasureGroup>
+      <ID>Hecho Trafico Web</ID>
+      <Partitions>
+        <Partition dwd:design-time-name="f71a0f20-0f65-40e5-aa7f-9bd6cc6d53b6">
+          <ID>Hecho Trafico Web</ID>
+          <Name>Hecho Trafico Web</Name>
+          <CreatedTimestamp>0001-01-01T06:00:00Z</CreatedTimestamp>
+          <LastSchemaUpdate>0001-01-01T06:00:00Z</LastSchemaUpdate>
+          <LastProcessed>0001-01-01T06:00:00Z</LastProcessed>
+          <State>Unprocessed</State>
+          <Source xsi:type="DsvTableBinding" dwd:design-time-name="b8ce3e82-c307-4632-9760-674b6f812741">
+            <DataSourceViewID>DSV_AndinaRetail</DataSourceViewID>
+            <TableID>dbo_Hecho_Trafico_Web</TableID>
+          </Source>
+          <StorageMode>Molap</StorageMode>
+          <CurrentStorageMode>Molap</CurrentStorageMode>
+          <ProcessingMode>Regular</ProcessingMode>
+        </Partition>
+      </Partitions>
+    </MeasureGroup>
+    <MeasureGroup>
+      <ID>Hecho Finanzas Mensual</ID>
+      <Partitions>
+        <Partition dwd:design-time-name="aed831b9-be90-4047-bd0c-ffcbcc1e887d">
+          <ID>Hecho Finanzas Mensual</ID>
+          <Name>Hecho Finanzas Mensual</Name>
+          <CreatedTimestamp>0001-01-01T06:00:00Z</CreatedTimestamp>
+          <LastSchemaUpdate>0001-01-01T06:00:00Z</LastSchemaUpdate>
+          <LastProcessed>0001-01-01T06:00:00Z</LastProcessed>
+          <State>Unprocessed</State>
+          <Source xsi:type="DsvTableBinding" dwd:design-time-name="507693d0-2176-4a75-b296-77aea9bbf9a0">
+            <DataSourceViewID>DSV_AndinaRetail</DataSourceViewID>
+            <TableID>dbo_Hecho_Finanzas_Mensual</TableID>
+          </Source>
+          <StorageMode>Molap</StorageMode>
+          <CurrentStorageMode>Molap</CurrentStorageMode>
+          <ProcessingMode>Regular</ProcessingMode>
+        </Partition>
+      </Partitions>
+    </MeasureGroup>
+    <MeasureGroup>
+      <ID>Hecho Ventas</ID>
+      <Partitions>
+        <Partition dwd:design-time-name="746aece5-4963-4877-b825-76100537e4fb">
+          <ID>Hecho Ventas</ID>
+          <Name>Hecho Ventas</Name>
+          <CreatedTimestamp>0001-01-01T06:00:00Z</CreatedTimestamp>
+          <LastSchemaUpdate>0001-01-01T06:00:00Z</LastSchemaUpdate>
+          <LastProcessed>0001-01-01T06:00:00Z</LastProcessed>
+          <State>Unprocessed</State>
+          <Source xsi:type="DsvTableBinding" dwd:design-time-name="337f2e95-1e87-48f8-a50f-c49f5be66d40">
+            <DataSourceViewID>DSV_AndinaRetail</DataSourceViewID>
+            <TableID>dbo_Hecho_Ventas</TableID>
+          </Source>
+          <StorageMode>Molap</StorageMode>
+          <CurrentStorageMode>Molap</CurrentStorageMode>
+          <ProcessingMode>Regular</ProcessingMode>
+        </Partition>
+      </Partitions>
+    </MeasureGroup>
+    <MeasureGroup>
+      <ID>Hecho Ventas 1</ID>
+      <Partitions>
+        <Partition dwd:design-time-name="6add1c94-4dab-4da4-88cc-a4e4af1053ea">
+          <ID>Hecho Ventas</ID>
+          <Name>Hecho Ventas</Name>
+          <CreatedTimestamp>0001-01-01T06:00:00Z</CreatedTimestamp>
+          <LastSchemaUpdate>0001-01-01T06:00:00Z</LastSchemaUpdate>
+          <LastProcessed>0001-01-01T06:00:00Z</LastProcessed>
+          <State>Unprocessed</State>
+          <Source xsi:type="DsvTableBinding" dwd:design-time-name="75241ba8-2c20-4e57-bc53-201da2b6488e">
+            <DataSourceViewID>DSV_AndinaRetail</DataSourceViewID>
+            <TableID>dbo_Hecho_Ventas</TableID>
+          </Source>
+          <StorageMode>Molap</StorageMode>
+          <CurrentStorageMode>Molap</CurrentStorageMode>
+          <ProcessingMode>Regular</ProcessingMode>
+        </Partition>
+      </Partitions>
+    </MeasureGroup>
+  </MeasureGroups>
+</Cube>

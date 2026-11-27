@@ -19,7 +19,7 @@ Cada carpeta tiene un README con el mismo orden: **qué es, qué ya está hecho,
 | Si te toca… | Lee primero | Qué ya está hecho | Qué te falta |
 |---|---|---|---|
 | **1. ETL y DW** | [`pentaho/README.md`](pentaho/README.md) | ETL en **Pentaho** (job + 8 transformaciones, como propuso la Fase 1), verificado contra el Excel y contra el ETL de Python | Capturas en Spoon y redactar la sección 2 del informe |
-| **2. KPIs y cubo** | [`sql/README.md`](sql/README.md), luego [`olap/README.md`](olap/README.md) | Los 10 KPIs en SQL con valores verificados; consultas para capturas; cubo hecho en SQL | Construir el cubo SSAS siguiendo la guía paso a paso |
+| **2. KPIs y cubo** | [`sql/README.md`](sql/README.md), luego [`olap/README.md`](olap/README.md) | Los 10 KPIs en SQL con valores verificados; cubo SSAS construido y procesado, con los KPIs en MDX iguales a SQL; evidencias en [`evidencias/parte2/`](evidencias/parte2/README.md) | Redactar las secciones 3 y 4.1 del informe |
 | **3. Minería** | [`mining/README.md`](mining/README.md) | Notebook de K-means que corre completo | Elegir el número de grupos, ponerle nombre a cada uno e interpretarlos |
 | **4. Power BI** | [`powerbi/README.md`](powerbi/README.md) | Consultas para pegar, relaciones, medidas de los 10 KPIs y boceto de 5 páginas | Armar el reporte y escribir la interpretación |
 | **Informe PDF** | [`docs/README.md`](docs/README.md) | Material por sección del informe, decisiones de diseño y relación con las clases | Redactar, hacer capturas y armar la portada |
@@ -55,7 +55,7 @@ Debe terminar diciendo `OK`. El detalle queda en [`data/sample/reporte_carga.md`
 |---|---|---|
 | Base de datos | SQL Server | ✅ SQL Server (`AndinaRetailDW`) |
 | ETL | **Pentaho** | ✅ Pentaho Data Integration 9.4 (`pentaho/andina_etl.kjb`). El ETL de Python queda como validador y genera los CSV |
-| Cubo OLAP | SSAS multidimensional | Guía + fórmulas MDX; **cubo por construir**. Mientras tanto hay un cubo hecho en SQL como respaldo |
+| Cubo OLAP | SSAS multidimensional | ✅ Cubo SSAS multidimensional (`olap/ssas/AndinaRetail_Cubo`) con los 10 KPIs en MDX. El cubo hecho en SQL queda como respaldo |
 | Minería | K-means en Python | ✅ Notebook funcionando |
 | Reporte | Power BI conectado en vivo al cubo | Guía para Power BI en modo importación (no depende del cubo). **Decisión abierta** |
 
@@ -101,7 +101,7 @@ data/sample/   La base limpia en CSV + reportes de la carga               → pa
 pentaho/       ETL en Pentaho: job, transformaciones y ejecutor             → parte 1
 etl/           ETL en Python: validador independiente y extracto CSV        → parte 1 y todos
 sql/           Tablas, vistas de KPIs, cubo en SQL y consultas de evidencia → parte 2
-olap/          Guía y fórmulas para el cubo SSAS                          → parte 2
+olap/          Proyecto del cubo SSAS, KPIs en MDX y script de despliegue → parte 2
 mining/        Notebook de K-means y sus resultados                       → parte 3
 powerbi/       Guía, consultas y medidas DAX (aquí se guardará el .pbip)  → parte 4
 docs/          Material para redactar el informe                          → quien redacte
