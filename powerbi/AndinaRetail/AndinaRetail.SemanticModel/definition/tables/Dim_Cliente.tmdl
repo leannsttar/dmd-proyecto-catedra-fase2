@@ -1,0 +1,87 @@
+table Dim_Cliente
+	lineageTag: 3f5fe2da-6577-4515-ba82-ae34db0f6b9a
+
+	column cliente_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9a9d60bf-5350-48ed-9228-6c0c65eb0670
+		summarizeBy: none
+		sourceColumn: cliente_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cliente_id
+		dataType: string
+		lineageTag: e3f590f1-624f-4b15-8826-c7cd29ff079a
+		summarizeBy: none
+		sourceColumn: cliente_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre
+		dataType: string
+		lineageTag: 667631b4-6c9a-4927-a737-1c492ea3163f
+		summarizeBy: none
+		sourceColumn: nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmento
+		dataType: string
+		lineageTag: 724f7858-6734-464a-ad18-d126093f6824
+		summarizeBy: none
+		sourceColumn: segmento
+
+		annotation SummarizationSetBy = Automatic
+
+	column fecha_registro
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3730b9fa-1d47-4f19-b3bd-7b0a7e105866
+		summarizeBy: none
+		sourceColumn: fecha_registro
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column segmento_cluster
+		dataType: int64
+		formatString: 0
+		lineageTag: 64ff9c9e-282e-48e2-90f3-5e897ad71655
+		summarizeBy: none
+		sourceColumn: segmento_cluster
+
+		annotation SummarizationSetBy = User
+
+	partition Dim_Cliente = m
+		mode: import
+		source =
+				let
+				    Tipos = {
+				        {"cliente_key", Int64.Type},
+				        {"cliente_id", type text},
+				        {"nombre", type text},
+				        {"segmento", type text},
+				        {"fecha_registro", type date},
+				        {"segmento_cluster", Int64.Type}
+				    },
+				    DesdeSQL = () => Sql.Database(Servidor, BaseDatos){[Schema = "dbo", Item = "Dim_Cliente"]}[Data],
+				    DesdeCSV = () =>
+				        let
+				            Csv = Csv.Document(File.Contents(CarpetaMuestra & "\Dim_Cliente.csv"),
+				                               [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv])
+				        in
+				            Table.PromoteHeaders(Csv, [PromoteAllScalars = true]),
+				    Origen = if FuenteDatos = "SQL" then DesdeSQL() else DesdeCSV(),
+				    Resultado = Table.TransformColumnTypes(Table.SelectColumns(Origen, List.Transform(Tipos, each _{0})), Tipos, "en-US")
+				in
+				    Resultado
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

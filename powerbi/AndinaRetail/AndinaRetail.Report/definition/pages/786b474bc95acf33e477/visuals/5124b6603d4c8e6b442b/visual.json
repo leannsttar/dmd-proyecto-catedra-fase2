@@ -1,0 +1,44 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "5124b6603d4c8e6b442b",
+  "position": {
+    "x": 191.49606299212599,
+    "y": 52.913385826771659,
+    "z": 0,
+    "height": 118.4251968503937,
+    "width": 1012.9133858267717,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontSize": "42pt"
+                    }
+                  },
+                  {
+                    "value": "¿Cómo cerró Andina Retail el 2024?",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "42pt"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "center"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

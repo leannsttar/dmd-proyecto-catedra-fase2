@@ -1,0 +1,165 @@
+table _Medidas
+	lineageTag: 93dc64bb-b2f1-4f14-8521-40b598ba441b
+
+	measure Ventas = SUM ( Hecho_Ventas[total] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 12b51144-2f37-4568-ab51-114280d46958
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-US"}
+
+	measure Ordenes = DISTINCTCOUNT ( Hecho_Ventas[orden_id] )
+		formatString: 0
+		lineageTag: c62aa10e-11d0-4a19-ae57-696b9aee9d84
+
+	measure Unidades = SUM ( Hecho_Ventas[cantidad] )
+		formatString: 0
+		lineageTag: e5f2c7aa-203d-4820-86fc-85a514a9de89
+
+	measure 'Clientes con compra' = DISTINCTCOUNT ( Hecho_Ventas[cliente_key] )
+		formatString: 0
+		lineageTag: 4f763c0f-ef20-4a7f-9414-3e897949475e
+
+	measure 'Ticket promedio' = DIVIDE ( [Ventas], [Ordenes] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 873adb07-143b-4adb-9c8f-f0f8bbb55fcc
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Ventas por cliente' = DIVIDE ( [Ventas], [Clientes con compra] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: e8cb7829-ee55-46ad-a75a-0f76dd1a605a
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Ventas E-commerce' = CALCULATE ( [Ventas], Dim_Canal[canal] = "E-commerce" )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 15b4699d-06da-400b-9a4e-b6c3cb34174a
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Participacion e-commerce %' = DIVIDE ( [Ventas E-commerce], [Ventas] )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 01538fac-a776-4420-a555-17ce3883c4e4
+
+	measure 'Ventas mes anterior' = ```
+			
+			        VAR anio = MAX ( Dim_Mes[anio] )
+			        VAR mes = MAX ( Dim_Mes[mes_numero] )
+			        RETURN IF ( HASONEVALUE ( Dim_Mes[mes_key] ),
+			            CALCULATE ( [Ventas], FILTER ( ALL ( Dim_Mes ), Dim_Mes[anio] = anio && Dim_Mes[mes_numero] = mes - 1 ) ) )
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 9858de71-982a-4e1a-b5a2-2acb7e6f7134
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Crecimiento ventas %' = ```
+			
+			        VAR anterior = [Ventas mes anterior]
+			        RETURN IF ( NOT ISBLANK ( anterior ), DIVIDE ( [Ventas] - anterior, anterior ) )
+			```
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: eb7cf726-d960-4f8a-8de3-d82c11ea0e89
+
+	measure 'Mes parcial' = ```
+			
+			        VAR ultima = CALCULATE ( MAX ( Hecho_Ventas[tiempo_key] ), ALL ( Hecho_Ventas ) )
+			        VAR fechaUltima = DATE ( INT ( ultima / 10000 ), MOD ( INT ( ultima / 100 ), 100 ), MOD ( ultima, 100 ) )
+			        RETURN IF ( HASONEVALUE ( Dim_Mes[mes_key] )
+			                    && SELECTEDVALUE ( Dim_Mes[mes_key] ) = INT ( ultima / 100 )
+			                    && fechaUltima < EOMONTH ( fechaUltima, 0 ), 1, 0 )
+			```
+		formatString: 0
+		lineageTag: 9a294aab-0987-470c-b000-6d1fbcad5501
+
+	measure Ingresos = SUM ( Hecho_Finanzas_Mensual[ingresos] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: e687904f-9527-4146-b14e-7a3f465e4dcd
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Costo ventas' = SUM ( Hecho_Finanzas_Mensual[costo_ventas] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 8807a938-4277-45f1-adc1-4f141984fdc1
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Gastos operativos' = SUM ( Hecho_Finanzas_Mensual[gastos_operativos] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 54a70639-abae-4f15-b583-db369d476eea
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Utilidad neta' = SUM ( Hecho_Finanzas_Mensual[utilidad_neta] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: a535ee96-50b6-4382-80bb-dee3b67972de
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure Inversiones = SUM ( Hecho_Finanzas_Mensual[inversiones_realizadas] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 81542d6d-7b53-4983-9720-2cc730ed8c9c
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Flujo caja' = SUM ( Hecho_Finanzas_Mensual[flujo_caja] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 81571e7c-165d-49b3-9e4e-fb37f2a98b99
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Margen bruto %' = DIVIDE ( [Ingresos] - [Costo ventas], [Ingresos] )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 2afb2fa0-bdb0-4279-bc13-993025efc5e6
+
+	measure 'Margen neto %' = DIVIDE ( [Utilidad neta], [Ingresos] )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 58ef2cf1-1fe7-4600-91a1-eed0603893f9
+
+	measure 'Indice gastos operativos %' = DIVIDE ( [Gastos operativos], [Ingresos] )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 9d602ecb-6dd5-4e66-bd51-4be73ad81b2d
+
+	measure 'ROI %' = DIVIDE ( [Utilidad neta], [Inversiones] )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: f1522bdb-a8fd-49d7-b424-b10b4cf8a2a6
+
+	measure 'Flujo caja acumulado' = ```
+			
+			        VAR anio = MAX ( Dim_Mes[anio] )
+			        VAR mes = MAX ( Dim_Mes[mes_numero] )
+			        RETURN CALCULATE ( [Flujo caja], FILTER ( ALL ( Dim_Mes ), Dim_Mes[anio] = anio && Dim_Mes[mes_numero] <= mes ) )
+			```
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: e3bc2167-9691-4e08-a174-bbda4aa2472c
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Alerta margen bruto' = IF ( [Margen bruto %] < 0.40, 1, 0 )
+		formatString: 0
+		lineageTag: 1554e318-bf61-44a4-978f-4260c3806ae7
+
+	measure 'Visitas web' = SUM ( Hecho_Trafico_Web[visitas_web] )
+		formatString: 0
+		lineageTag: 9bc4750a-98ef-41ce-be4d-14efabe2cd2c
+
+	measure 'Conversiones web' = SUM ( Hecho_Trafico_Web[conversiones_web] )
+		formatString: 0
+		lineageTag: bbb5d90b-b784-4ae3-833d-8b30ac154905
+
+	measure 'Tasa conversion web %' = DIVIDE ( [Conversiones web], [Visitas web] )
+		formatString: 0.00\ %;-0.00\ %;0.00\ %
+		lineageTag: 85613adb-7c11-475a-902c-37eae464c5d1
+
+	partition _Medidas = m
+		mode: import
+		source =
+				let
+				    Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Columna1 = _t]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"Columna1", type text}}),
+				    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado",{"Columna1"})
+				in
+				    #"Columnas quitadas"
+
+	annotation PBI_ResultType = Table
+

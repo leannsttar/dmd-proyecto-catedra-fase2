@@ -1,0 +1,35 @@
+table Dim_Region_Cliente
+	lineageTag: 2baafee2-b7b5-4964-b922-12db3971ea2e
+
+	column region_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 06f07afa-ac17-45b8-abf9-f4d172fa4635
+		summarizeBy: none
+		sourceColumn: region_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 00d37764-f877-4e91-9a34-2a8ceffba58a
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Region_Cliente = m
+		mode: import
+		source =
+				let
+				    Origen = Dim_Region
+				in
+				    Origen
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

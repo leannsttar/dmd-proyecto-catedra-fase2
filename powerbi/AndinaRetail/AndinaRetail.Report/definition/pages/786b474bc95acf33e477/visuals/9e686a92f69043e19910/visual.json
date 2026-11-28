@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "9e686a92f69043e19910",
+  "position": {
+    "x": 1322.5,
+    "y": 322.5,
+    "z": 13000,
+    "height": 150,
+    "width": 235,
+    "tabOrder": 13000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Tasa conversion web %"
+                }
+              },
+              "queryRef": "_Medidas.Tasa conversion web %",
+              "nativeQueryRef": "Tasa conversion web %"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,44 @@
+relationship faec0cbc-e500-15ab-29d2-431181c2d008
+	fromColumn: Hecho_Ventas.mes_key
+	toColumn: Dim_Mes.mes_key
+
+relationship 908907dd-abad-a85c-03fe-49bc7958c94d
+	fromColumn: Hecho_Finanzas_Mensual.mes_key
+	toColumn: Dim_Mes.mes_key
+
+relationship 95ac29a6-721b-f64f-9937-6a69b85faf9e
+	fromColumn: Hecho_Ventas.tiempo_key
+	toColumn: Dim_Tiempo.tiempo_key
+
+relationship 97af9327-e362-8779-1930-9f61a940f143
+	fromColumn: Hecho_Ventas.cliente_key
+	toColumn: Dim_Cliente.cliente_key
+
+relationship 5350cf71-709f-54fb-49c2-943c76ed7142
+	fromColumn: Hecho_Trafico_Web.cliente_key
+	toColumn: Dim_Cliente.cliente_key
+
+relationship 2131453f-5931-348e-e4ca-68b6da62eefa
+	fromColumn: Hecho_Ventas.producto_key
+	toColumn: Dim_Producto.producto_key
+
+relationship 48ef8ab9-07e2-0b3f-7318-d7bf3c092adf
+	fromColumn: Hecho_Ventas.canal_key
+	toColumn: Dim_Canal.canal_key
+
+relationship f32243a7-eda6-5b85-6e12-fe6d1f7d3352
+	fromColumn: Hecho_Ventas.vendedor_key
+	toColumn: Dim_Vendedor.vendedor_key
+
+relationship a9a5625f-fb29-f9d8-064c-601eac8c7ca1
+	fromColumn: Hecho_Ventas.region_venta_key
+	toColumn: Dim_Region.region_key
+
+relationship 230ec568-df9c-828e-a5da-7fc0670db58d
+	fromColumn: Hecho_Ventas.region_cliente_key
+	toColumn: Dim_Region_Cliente.region_key
+
+relationship 9c22eaeb-9944-affa-9372-5e563dcd4150
+	fromColumn: Hecho_Trafico_Web.region_cliente_key
+	toColumn: Dim_Region_Cliente.region_key
+

@@ -1,0 +1,121 @@
+table Hecho_Finanzas_Mensual
+	lineageTag: 303d833a-e54a-4fac-8c13-bc31c4d7ab12
+
+	column mes_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0be7e8d9-cdb5-4f53-b8fb-07d99dd5b0a4
+		summarizeBy: none
+		sourceColumn: mes_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ingresos
+		dataType: decimal
+		formatString: \$#,0.###############;-\$#,0.###############;\$#,0.###############
+		lineageTag: cbee6f65-7799-4ce2-a6ea-55a1704c64b5
+		summarizeBy: sum
+		sourceColumn: ingresos
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-SV"}
+
+	column costo_ventas
+		dataType: decimal
+		formatString: \$#,0.###############;-\$#,0.###############;\$#,0.###############
+		lineageTag: bb7f05cb-3113-4fe5-8a19-692dae16f230
+		summarizeBy: sum
+		sourceColumn: costo_ventas
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-SV"}
+
+	column gastos_operativos
+		dataType: decimal
+		formatString: \$#,0.###############;-\$#,0.###############;\$#,0.###############
+		lineageTag: 6e06e09e-cc09-4e2c-b4ed-9ffd83b3064a
+		summarizeBy: sum
+		sourceColumn: gastos_operativos
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-SV"}
+
+	column utilidad_neta
+		dataType: decimal
+		formatString: \$#,0.###############;-\$#,0.###############;\$#,0.###############
+		lineageTag: b1c9dc4b-3e84-4fb9-8b12-12d25b6ae0c2
+		summarizeBy: sum
+		sourceColumn: utilidad_neta
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-SV"}
+
+	column flujo_caja
+		dataType: decimal
+		formatString: \$#,0.###############;-\$#,0.###############;\$#,0.###############
+		lineageTag: 281ce40b-b353-4b30-9607-8a3e1b1df5d3
+		summarizeBy: sum
+		sourceColumn: flujo_caja
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-SV"}
+
+	column inversiones_realizadas
+		dataType: decimal
+		formatString: \$#,0.###############;-\$#,0.###############;\$#,0.###############
+		lineageTag: ce16b07f-4ac1-4620-98b2-10b02c95d3a7
+		summarizeBy: sum
+		sourceColumn: inversiones_realizadas
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-SV"}
+
+	column retorno_inversion
+		dataType: double
+		lineageTag: 31070ce9-8741-46d6-95f7-46e55656d87c
+		summarizeBy: sum
+		sourceColumn: retorno_inversion
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Hecho_Finanzas_Mensual = m
+		mode: import
+		source =
+				let
+				    Tipos = {
+				        {"mes_key", Int64.Type},
+				        {"ingresos", Currency.Type},
+				        {"costo_ventas", Currency.Type},
+				        {"gastos_operativos", Currency.Type},
+				        {"utilidad_neta", Currency.Type},
+				        {"flujo_caja", Currency.Type},
+				        {"inversiones_realizadas", Currency.Type},
+				        {"retorno_inversion", type number}
+				    },
+				    DesdeSQL = () => Sql.Database(Servidor, BaseDatos){[Schema = "dbo", Item = "Hecho_Finanzas_Mensual"]}[Data],
+				    DesdeCSV = () =>
+				        let
+				            Csv = Csv.Document(File.Contents(CarpetaMuestra & "\Hecho_Finanzas_Mensual.csv"),
+				                               [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv])
+				        in
+				            Table.PromoteHeaders(Csv, [PromoteAllScalars = true]),
+				    Origen = if FuenteDatos = "SQL" then DesdeSQL() else DesdeCSV(),
+				    Resultado = Table.TransformColumnTypes(Table.SelectColumns(Origen, List.Transform(Tipos, each _{0})), Tipos, "en-US")
+				in
+				    Resultado
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+
