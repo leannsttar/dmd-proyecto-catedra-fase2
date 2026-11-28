@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "ad7f568f234f84511319",
+  "position": {
+    "x": 761.25,
+    "y": 322.5,
+    "z": 11000,
+    "height": 150,
+    "width": 235,
+    "tabOrder": 11000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Ventas por cliente"
+                }
+              },
+              "queryRef": "_Medidas.Ventas por cliente",
+              "nativeQueryRef": "Ventas por cliente"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

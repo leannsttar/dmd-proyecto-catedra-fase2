@@ -1,0 +1,172 @@
+table Hecho_Ventas
+	lineageTag: a5284764-faad-46e4-b534-f3670173bf25
+
+	column tiempo_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 03e46ee0-4e98-4b28-952f-35b4b3b8a47a
+		summarizeBy: none
+		sourceColumn: tiempo_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: eee38d6d-9ef3-43c8-bddf-78efa3827c53
+		summarizeBy: none
+		sourceColumn: mes_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cliente_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 749281c5-3540-48a8-a838-97e9a5ae9dc7
+		summarizeBy: none
+		sourceColumn: cliente_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column producto_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5f7ab737-30da-4579-8529-84952dc301ce
+		summarizeBy: none
+		sourceColumn: producto_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column canal_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d2b51b84-fdfc-4c0a-9157-c737857f1add
+		summarizeBy: none
+		sourceColumn: canal_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendedor_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 90e0f6ee-4045-46e9-b425-496e92df782d
+		summarizeBy: none
+		sourceColumn: vendedor_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column region_cliente_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 42bf6348-1573-40b5-b9ad-48122a254a67
+		summarizeBy: none
+		sourceColumn: region_cliente_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column region_venta_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2bb6cd4e-87d5-46bc-8508-07a6dc74eaad
+		summarizeBy: none
+		sourceColumn: region_venta_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column orden_id
+		dataType: string
+		lineageTag: 1ecb6445-087a-4bec-be84-54fc31ac678a
+		summarizeBy: none
+		sourceColumn: orden_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cantidad
+		dataType: int64
+		formatString: 0
+		lineageTag: 22204005-41dd-412a-b1a5-8bd75d593a0e
+		summarizeBy: sum
+		sourceColumn: cantidad
+
+		annotation SummarizationSetBy = Automatic
+
+	column precio_unitario
+		dataType: decimal
+		formatString: \$#,0.###############;-\$#,0.###############;\$#,0.###############
+		lineageTag: cf0b6ea3-dfd1-460a-aad6-814232944f3d
+		summarizeBy: sum
+		sourceColumn: precio_unitario
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-SV"}
+
+	column total
+		dataType: decimal
+		formatString: \$#,0.###############;-\$#,0.###############;\$#,0.###############
+		lineageTag: 1aca55fc-5b67-48c3-9313-996fa4bc4a3a
+		summarizeBy: sum
+		sourceColumn: total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-SV"}
+
+	partition Hecho_Ventas = m
+		mode: import
+		source =
+				let
+				    Tipos = {
+				        {"tiempo_key", Int64.Type},
+				        {"mes_key", Int64.Type},
+				        {"cliente_key", Int64.Type},
+				        {"producto_key", Int64.Type},
+				        {"canal_key", Int64.Type},
+				        {"vendedor_key", Int64.Type},
+				        {"region_cliente_key", Int64.Type},
+				        {"region_venta_key", Int64.Type},
+				        {"orden_id", type text},
+				        {"cantidad", Int64.Type},
+				        {"precio_unitario", Currency.Type},
+				        {"total", Currency.Type}
+				    },
+				    DesdeSQL = () => Sql.Database(Servidor, BaseDatos){[Schema = "dbo", Item = "Hecho_Ventas"]}[Data],
+				    DesdeCSV = () =>
+				        let
+				            Csv = Csv.Document(File.Contents(CarpetaMuestra & "\Hecho_Ventas.csv"),
+				                               [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv])
+				        in
+				            Table.PromoteHeaders(Csv, [PromoteAllScalars = true]),
+				    Origen = if FuenteDatos = "SQL" then DesdeSQL() else DesdeCSV(),
+				    Resultado = Table.TransformColumnTypes(Table.SelectColumns(Origen, List.Transform(Tipos, each _{0})), Tipos, "en-US")
+				in
+				    Resultado
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

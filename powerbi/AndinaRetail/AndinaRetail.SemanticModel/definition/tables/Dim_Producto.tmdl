@@ -1,0 +1,56 @@
+table Dim_Producto
+	lineageTag: 652a8001-931c-4450-bf1e-936bd9b4182d
+
+	column producto_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e38a45d0-4a27-4f85-9887-b4d644b7dd69
+		summarizeBy: none
+		sourceColumn: producto_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column producto
+		dataType: string
+		lineageTag: 7f5b517a-cbdd-4aad-82a6-8ad1da1cdb77
+		summarizeBy: none
+		sourceColumn: producto
+
+		annotation SummarizationSetBy = Automatic
+
+	column categoria
+		dataType: string
+		lineageTag: 97837d4d-812b-49e1-a4c3-0172c8414a55
+		summarizeBy: none
+		sourceColumn: categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Producto = m
+		mode: import
+		source =
+				let
+				    Tipos = {
+				        {"producto_key", Int64.Type},
+				        {"producto", type text},
+				        {"categoria", type text}
+				    },
+				    DesdeSQL = () => Sql.Database(Servidor, BaseDatos){[Schema = "dbo", Item = "Dim_Producto"]}[Data],
+				    DesdeCSV = () =>
+				        let
+				            Csv = Csv.Document(File.Contents(CarpetaMuestra & "\Dim_Producto.csv"),
+				                               [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv])
+				        in
+				            Table.PromoteHeaders(Csv, [PromoteAllScalars = true]),
+				    Origen = if FuenteDatos = "SQL" then DesdeSQL() else DesdeCSV(),
+				    Resultado = Table.TransformColumnTypes(Table.SelectColumns(Origen, List.Transform(Tipos, each _{0})), Tipos, "en-US")
+				in
+				    Resultado
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

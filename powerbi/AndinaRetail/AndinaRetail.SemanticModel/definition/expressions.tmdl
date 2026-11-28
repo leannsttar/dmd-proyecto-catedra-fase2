@@ -1,0 +1,28 @@
+expression FuenteDatos = "CSV" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: ef3a4f8e-648f-4e93-85c6-42d272c8a1c6
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Text
+
+expression CarpetaMuestra = "C:\dmd\dmd-proyecto-catedra-fase2-main\data\sample" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 4cc4ae07-e07c-474f-a472-4ca9925fada1
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Text
+
+expression Servidor = "localhost" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: cca6bef1-4cb1-4b3f-8f1a-57e034df7219
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Text
+
+expression BaseDatos = "AndinaRetailDW" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 4eb5dbf3-f752-4ca5-acc2-0c14aeb487b6
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Text
+

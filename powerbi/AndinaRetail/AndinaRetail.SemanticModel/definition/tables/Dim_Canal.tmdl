@@ -1,0 +1,47 @@
+table Dim_Canal
+	lineageTag: bae1f82c-452a-42e5-bb2e-ae0cfc4470a8
+
+	column canal_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0f6cd076-d927-416e-bd75-29f5432d328a
+		summarizeBy: none
+		sourceColumn: canal_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column canal
+		dataType: string
+		lineageTag: a315b5a5-0615-46a9-a7f6-2d0e702e4c89
+		summarizeBy: none
+		sourceColumn: canal
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Canal = m
+		mode: import
+		source =
+				let
+				    Tipos = {
+				        {"canal_key", Int64.Type},
+				        {"canal", type text}
+				    },
+				    DesdeSQL = () => Sql.Database(Servidor, BaseDatos){[Schema = "dbo", Item = "Dim_Canal"]}[Data],
+				    DesdeCSV = () =>
+				        let
+				            Csv = Csv.Document(File.Contents(CarpetaMuestra & "\Dim_Canal.csv"),
+				                               [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv])
+				        in
+				            Table.PromoteHeaders(Csv, [PromoteAllScalars = true]),
+				    Origen = if FuenteDatos = "SQL" then DesdeSQL() else DesdeCSV(),
+				    Resultado = Table.TransformColumnTypes(Table.SelectColumns(Origen, List.Transform(Tipos, each _{0})), Tipos, "en-US")
+				in
+				    Resultado
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

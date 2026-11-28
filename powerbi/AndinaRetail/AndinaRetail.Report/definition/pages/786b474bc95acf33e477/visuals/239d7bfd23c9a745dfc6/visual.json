@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "239d7bfd23c9a745dfc6",
+  "position": {
+    "x": 761.25,
+    "y": 540,
+    "z": 18000,
+    "height": 150,
+    "width": 235,
+    "tabOrder": 18000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Flujo caja acumulado"
+                }
+              },
+              "queryRef": "_Medidas.Flujo caja acumulado",
+              "nativeQueryRef": "Flujo caja acumulado"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

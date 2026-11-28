@@ -1,0 +1,57 @@
+// Le damos la bienvenida a la vista de consultas DAX. Obtenga más información sobre las consultas DAX en https://aka.ms/dax-queries.
+DEFINE
+    MEASURE '_Medidas'[Ventas] = SUM ( Hecho_Ventas[total] )
+    MEASURE '_Medidas'[Ordenes] = DISTINCTCOUNT ( Hecho_Ventas[orden_id] )
+    MEASURE '_Medidas'[Unidades] = SUM ( Hecho_Ventas[cantidad] )
+    MEASURE '_Medidas'[Clientes con compra] = DISTINCTCOUNT ( Hecho_Ventas[cliente_key] )
+    MEASURE '_Medidas'[Ticket promedio] = DIVIDE ( [Ventas], [Ordenes] )
+    MEASURE '_Medidas'[Ventas por cliente] = DIVIDE ( [Ventas], [Clientes con compra] )
+    MEASURE '_Medidas'[Ventas E-commerce] = CALCULATE ( [Ventas], Dim_Canal[canal] = "E-commerce" )
+    MEASURE '_Medidas'[Participacion e-commerce %] = DIVIDE ( [Ventas E-commerce], [Ventas] )
+    MEASURE '_Medidas'[Ventas mes anterior] =
+        VAR anio = MAX ( Dim_Mes[anio] )
+        VAR mes = MAX ( Dim_Mes[mes_numero] )
+        RETURN IF ( HASONEVALUE ( Dim_Mes[mes_key] ),
+            CALCULATE ( [Ventas], FILTER ( ALL ( Dim_Mes ), Dim_Mes[anio] = anio && Dim_Mes[mes_numero] = mes - 1 ) ) )
+    MEASURE '_Medidas'[Crecimiento ventas %] =
+        VAR anterior = [Ventas mes anterior]
+        RETURN IF ( NOT ISBLANK ( anterior ), DIVIDE ( [Ventas] - anterior, anterior ) )
+    MEASURE '_Medidas'[Mes parcial] =
+        VAR ultima = CALCULATE ( MAX ( Hecho_Ventas[tiempo_key] ), ALL ( Hecho_Ventas ) )
+        VAR fechaUltima = DATE ( INT ( ultima / 10000 ), MOD ( INT ( ultima / 100 ), 100 ), MOD ( ultima, 100 ) )
+        RETURN IF ( HASONEVALUE ( Dim_Mes[mes_key] )
+                    && SELECTEDVALUE ( Dim_Mes[mes_key] ) = INT ( ultima / 100 )
+                    && fechaUltima < EOMONTH ( fechaUltima, 0 ), 1, 0 )
+    MEASURE '_Medidas'[Ingresos] = SUM ( Hecho_Finanzas_Mensual[ingresos] )
+    MEASURE '_Medidas'[Costo ventas] = SUM ( Hecho_Finanzas_Mensual[costo_ventas] )
+    MEASURE '_Medidas'[Gastos operativos] = SUM ( Hecho_Finanzas_Mensual[gastos_operativos] )
+    MEASURE '_Medidas'[Utilidad neta] = SUM ( Hecho_Finanzas_Mensual[utilidad_neta] )
+    MEASURE '_Medidas'[Inversiones] = SUM ( Hecho_Finanzas_Mensual[inversiones_realizadas] )
+    MEASURE '_Medidas'[Flujo caja] = SUM ( Hecho_Finanzas_Mensual[flujo_caja] )
+    MEASURE '_Medidas'[Margen bruto %] = DIVIDE ( [Ingresos] - [Costo ventas], [Ingresos] )
+    MEASURE '_Medidas'[Margen neto %] = DIVIDE ( [Utilidad neta], [Ingresos] )
+    MEASURE '_Medidas'[Indice gastos operativos %] = DIVIDE ( [Gastos operativos], [Ingresos] )
+    MEASURE '_Medidas'[ROI %] = DIVIDE ( [Utilidad neta], [Inversiones] )
+    MEASURE '_Medidas'[Flujo caja acumulado] =
+        VAR anio = MAX ( Dim_Mes[anio] )
+        VAR mes = MAX ( Dim_Mes[mes_numero] )
+        RETURN CALCULATE ( [Flujo caja], FILTER ( ALL ( Dim_Mes ), Dim_Mes[anio] = anio && Dim_Mes[mes_numero] <= mes ) )
+    MEASURE '_Medidas'[Alerta margen bruto] = IF ( [Margen bruto %] < 0.40, 1, 0 )
+    MEASURE '_Medidas'[Visitas web] = SUM ( Hecho_Trafico_Web[visitas_web] )
+    MEASURE '_Medidas'[Conversiones web] = SUM ( Hecho_Trafico_Web[conversiones_web] )
+    MEASURE '_Medidas'[Tasa conversion web %] = DIVIDE ( [Conversiones web], [Visitas web] )
+
+EVALUATE
+ROW (
+    "Ventas", [Ventas],
+    "Ordenes", [Ordenes],
+    "Ticket promedio", [Ticket promedio],
+    "Ventas por cliente", [Ventas por cliente],
+    "Participacion e-commerce", [Participacion e-commerce %],
+    "Tasa conversion web", [Tasa conversion web %],
+    "Margen bruto", [Margen bruto %],
+    "Margen neto", [Margen neto %],
+    "Indice gastos operativos", [Indice gastos operativos %],
+    "ROI", [ROI %],
+    "Flujo caja acumulado", CALCULATE ( [Flujo caja], ALL ( Dim_Mes ) )
+)

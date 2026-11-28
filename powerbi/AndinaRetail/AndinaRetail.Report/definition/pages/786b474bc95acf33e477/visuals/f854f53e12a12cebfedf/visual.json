@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "f854f53e12a12cebfedf",
+  "position": {
+    "x": 1032.5,
+    "y": 322.5,
+    "z": 12000,
+    "height": 150,
+    "width": 235,
+    "tabOrder": 12000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Participacion e-commerce %"
+                }
+              },
+              "queryRef": "_Medidas.Participacion e-commerce %",
+              "nativeQueryRef": "Participacion e-commerce %"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

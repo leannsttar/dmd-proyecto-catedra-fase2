@@ -1,0 +1,30 @@
+model Model
+	culture: es-MX
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-SV
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["FuenteDatos","CarpetaMuestra","Servidor","BaseDatos","Dim_Canal","Dim_Mes","Dim_Producto","Dim_Region","Dim_Tiempo","Dim_Vendedor","Hecho_Finanzas_Mensual","Hecho_Trafico_Web","Hecho_Ventas","Dim_Region_Cliente","Dim_Cliente","_Medidas"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
+
+ref table Dim_Canal
+ref table Dim_Mes
+ref table Dim_Producto
+ref table Dim_Region
+ref table Dim_Tiempo
+ref table Dim_Vendedor
+ref table Hecho_Finanzas_Mensual
+ref table Hecho_Trafico_Web
+ref table Hecho_Ventas
+ref table Dim_Region_Cliente
+ref table Dim_Cliente
+ref table _Medidas
+
+ref cultureInfo es-MX
+

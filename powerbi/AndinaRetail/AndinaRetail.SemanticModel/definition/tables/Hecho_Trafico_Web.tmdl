@@ -1,0 +1,81 @@
+table Hecho_Trafico_Web
+	lineageTag: 93507a4d-2678-40e1-93bb-4de6beb57972
+
+	column cliente_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b077eec3-3f61-49f6-86b2-ace8a977ad5c
+		summarizeBy: none
+		sourceColumn: cliente_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column region_cliente_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ba5e751e-5162-4c8b-8ef5-276f7601c270
+		summarizeBy: none
+		sourceColumn: region_cliente_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column anio
+		dataType: int64
+		formatString: 0
+		lineageTag: 91610a7b-428a-4784-96ef-1a148e093210
+		summarizeBy: sum
+		sourceColumn: anio
+
+		annotation SummarizationSetBy = Automatic
+
+	column visitas_web
+		dataType: int64
+		formatString: 0
+		lineageTag: ed8613e3-f0fc-4070-b6a2-a7bc0e3c8183
+		summarizeBy: sum
+		sourceColumn: visitas_web
+
+		annotation SummarizationSetBy = Automatic
+
+	column conversiones_web
+		dataType: int64
+		formatString: 0
+		lineageTag: dde8fe15-c80a-43d1-9688-1fe21b357773
+		summarizeBy: sum
+		sourceColumn: conversiones_web
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Hecho_Trafico_Web = m
+		mode: import
+		source =
+				let
+				    Tipos = {
+				        {"cliente_key", Int64.Type},
+				        {"region_cliente_key", Int64.Type},
+				        {"anio", Int64.Type},
+				        {"visitas_web", Int64.Type},
+				        {"conversiones_web", Int64.Type}
+				    },
+				    DesdeSQL = () => Sql.Database(Servidor, BaseDatos){[Schema = "dbo", Item = "Hecho_Trafico_Web"]}[Data],
+				    DesdeCSV = () =>
+				        let
+				            Csv = Csv.Document(File.Contents(CarpetaMuestra & "\Hecho_Trafico_Web.csv"),
+				                               [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv])
+				        in
+				            Table.PromoteHeaders(Csv, [PromoteAllScalars = true]),
+				    Origen = if FuenteDatos = "SQL" then DesdeSQL() else DesdeCSV(),
+				    Resultado = Table.TransformColumnTypes(Table.SelectColumns(Origen, List.Transform(Tipos, each _{0})), Tipos, "en-US")
+				in
+				    Resultado
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

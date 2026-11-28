@@ -1,0 +1,113 @@
+table Dim_Tiempo
+	lineageTag: ef5d7089-d701-4e64-9eb7-38e2402ecbcf
+	dataCategory: Time
+
+	column tiempo_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c178fa1b-5022-4bd6-b8a2-09f7d796fe82
+		summarizeBy: none
+		sourceColumn: tiempo_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column fecha
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: f981793c-f278-4899-8495-9cf180784a54
+		summarizeBy: none
+		sourceColumn: fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column dia_semana
+		dataType: string
+		lineageTag: f1fb59e7-4d8c-42f9-a854-61954e38fdc1
+		summarizeBy: none
+		sourceColumn: dia_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_numero
+		dataType: int64
+		formatString: 0
+		lineageTag: 6237f029-8547-4d4c-b2be-edca60886385
+		summarizeBy: none
+		sourceColumn: mes_numero
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre_mes
+		dataType: string
+		lineageTag: 6b8b4611-cc0c-4a45-a900-6b187313c401
+		summarizeBy: none
+		sourceColumn: nombre_mes
+		sortByColumn: mes_numero
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column trimestre
+		dataType: int64
+		formatString: 0
+		lineageTag: 135e03f0-0905-471a-88dd-88fa32d3ffc0
+		summarizeBy: none
+		sourceColumn: trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column semestre
+		dataType: int64
+		formatString: 0
+		lineageTag: 25da551a-63e1-4795-a20b-48700ff443f3
+		summarizeBy: none
+		sourceColumn: semestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column anio
+		dataType: int64
+		formatString: 0
+		lineageTag: 19bf5af9-7cf3-40bd-83a1-e5638e37862d
+		summarizeBy: none
+		sourceColumn: anio
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Tiempo = m
+		mode: import
+		source =
+				let
+				    Tipos = {
+				        {"tiempo_key", Int64.Type},
+				        {"fecha", type date},
+				        {"dia_semana", type text},
+				        {"mes_numero", Int64.Type},
+				        {"nombre_mes", type text},
+				        {"trimestre", Int64.Type},
+				        {"semestre", Int64.Type},
+				        {"anio", Int64.Type}
+				    },
+				    DesdeSQL = () => Sql.Database(Servidor, BaseDatos){[Schema = "dbo", Item = "Dim_Tiempo"]}[Data],
+				    DesdeCSV = () =>
+				        let
+				            Csv = Csv.Document(File.Contents(CarpetaMuestra & "\Dim_Tiempo.csv"),
+				                               [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv])
+				        in
+				            Table.PromoteHeaders(Csv, [PromoteAllScalars = true]),
+				    Origen = if FuenteDatos = "SQL" then DesdeSQL() else DesdeCSV(),
+				    Resultado = Table.TransformColumnTypes(Table.SelectColumns(Origen, List.Transform(Tipos, each _{0})), Tipos, "en-US")
+				in
+				    Resultado
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+
