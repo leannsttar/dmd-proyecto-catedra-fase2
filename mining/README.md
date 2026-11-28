@@ -8,8 +8,8 @@
 |---|---|
 | Los datos limpios del Excel (parte 1) | `data\sample\*.csv` y la base `AndinaRetailDW` |
 | El notebook completo, que corre de principio a fin sin errores (unos 40 segundos) | `mining\01_kmeans_clientes.ipynb` |
-| Una corrida provisional: k = 3, con nombres genéricos ("Grupo 1", "Grupo 2", "Grupo 3") | `mining\output\` |
-| Ese resultado provisional ya está en la base y en los CSV (`Dim_Cliente.segmento_cluster`), así que Power BI ya puede filtrar por grupo | — |
+| **Resultado final (27-nov):** las 7 variables de la Fase 1, k = 3 (silueta 0.19) y los nombres "Compra poco y en tienda" (44 clientes), "Ticket alto y en línea" (19) y "Frecuentes y de mayor gasto" (57). El notebook lee la base (`FUENTE=bd`) | `mining\output\`; evidencias en [`evidencias/parte3/`](../evidencias/parte3/README.md) |
+| Ese resultado ya está en la base, en los CSV y en el cubo (`Dim_Cliente.segmento_cluster`, atributo `Segmento Cluster`), así que Power BI y el cubo ya filtran por grupo | — |
 
 **Lo que hace el notebook**, siguiendo las fases del proceso KDD (Clase 13):
 1. Arma 7 variables por cliente (las de la Fase 1): venta total, número de órdenes, ticket promedio, % de compras en e-commerce, categorías compradas, visitas web y tasa de conversión.

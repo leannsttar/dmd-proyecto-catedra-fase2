@@ -20,7 +20,7 @@ Cada carpeta tiene un README con el mismo orden: **qué es, qué ya está hecho,
 |---|---|---|---|
 | **1. ETL y DW** | [`pentaho/README.md`](pentaho/README.md) | ETL en **Pentaho** (job + 8 transformaciones, como propuso la Fase 1), verificado contra el Excel y contra el ETL de Python | Capturas en Spoon y redactar la sección 2 del informe |
 | **2. KPIs y cubo** | [`sql/README.md`](sql/README.md), luego [`olap/README.md`](olap/README.md) | Los 10 KPIs en SQL con valores verificados; cubo SSAS construido y procesado, con los KPIs en MDX iguales a SQL; evidencias en [`evidencias/parte2/`](evidencias/parte2/README.md) | Redactar las secciones 3 y 4.1 del informe |
-| **3. Minería** | [`mining/README.md`](mining/README.md) | Notebook de K-means que corre completo; una corrida provisional (k = 3) ya está en la base | Decidir variables, k y nombres de los grupos; cargarlos en la base; sección 4.2 del informe |
+| **3. Minería** | [`mining/README.md`](mining/README.md) | K-means terminado: 7 variables, k = 3 y grupos con nombre, ya en la base y en el cubo; evidencias en [`evidencias/parte3/`](evidencias/parte3/README.md) | Video de la parte |
 | **4. Power BI** | [`powerbi/README.md`](powerbi/README.md) | Datos limpios (CSV y base), consultas para pegar, relaciones, medidas de los 10 KPIs con su valor esperado y propuesta de 5 páginas con datos para interpretarlas | Armar el reporte; secciones 4.3 y 6 del informe |
 | **Informe PDF** | [`docs/README.md`](docs/README.md) | Material por sección del informe, decisiones de diseño y relación con las clases | Redactar, hacer capturas y armar la portada |
 
