@@ -1,0 +1,5 @@
+-- KPIs del cubo por grupo K-means
+SELECT {[Measures].[Total], [Measures].[Hecho Ventas Count], [Measures].[Clientes Distintos],
+        [Measures].[Ticket Promedio], [Measures].[Ventas por Cliente], [Measures].[Participacion Ecommerce]} ON COLUMNS,
+       [Cliente].[Segmento Cluster].Members ON ROWS
+FROM [Cubo Ventas]
